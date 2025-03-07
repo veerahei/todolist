@@ -1,9 +1,10 @@
 export type Todo = {
-    description: string; 
-    date: string; 
+    description: string;
+    date: string;
+    priority: string;
 }
 
 export type TodoTableProps = {
     todos: Todo[];
-    deleteElement: (index: number) => void; 
+    deleteElement: (index: number) => void;
 }
