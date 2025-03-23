@@ -15,7 +15,7 @@ function TodoTable(props: TodoTableProps) {
                     {props.todos.map((todo, index) => (
                         <tr key={index}>
                             <td>{todo.description}</td>
-                            <td>{todo.date}</td>
+                            <td>{todo.date ? (todo.date).format("YYYY-MM-DD") : ""}</td>
                             <td>{todo.priority}</td>
                             <td><button onClick={() => props.deleteElement(index)}>Delete</button></td>
                         </tr>

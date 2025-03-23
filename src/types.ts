@@ -1,6 +1,8 @@
+import { Dayjs } from "dayjs";
+
 export type Todo = {
     description: string;
-    date: string;
+    date: Dayjs | null;
     priority: string;
 }
 

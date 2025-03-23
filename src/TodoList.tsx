@@ -5,12 +5,22 @@ import { AgGridReact } from "ag-grid-react";
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { ColDef } from "ag-grid-community";
 
+import TextField from "@mui/material/TextField"
+
+
+
+import * as React from 'react';
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from "dayjs";
+
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 function TodoList() {
 
-    const [todo, setTodo] = useState<Todo>({ description: '', date: '', priority: '' });
+    const [todo, setTodo] = useState<Todo>({ description: '', date: null, priority: '' });
     const [todos, setTodos] = useState<Todo[]>([]);
     const gridRef = useRef<AgGridReact<Todo>>(null);
 
@@ -21,7 +31,7 @@ function TodoList() {
 
     const addTodo = () => {
         setTodos([...todos, todo]);
-        setTodo({ description: "", date: "", priority: "" });
+        setTodo({ description: "", date: dayjs(""), priority: "" });
     }
 
     const deleteElement = () => {
@@ -59,25 +69,30 @@ function TodoList() {
 
     return (
         <>
-            <input
-                placeholder="Description"
+            <TextField
+                label="Description"
                 onChange={handleChange}
                 value={todo.description}
                 id="description"
             />
-            <input
-                placeholder="Date"
-                onChange={handleChange}
-                value={todo.date}
-                id="date"
-            />
-            <input
-                placeholder="Priority"
+
+            <TextField
+                label="Priority"
                 onChange={handleChange}
                 value={todo.priority}
                 id="priority"
 
             />
+        
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker 
+                    label="Date"
+                    value={todo.date}
+                    onChange={(newValue) => setTodo({...todo, date: newValue})}
+                    />
+            </LocalizationProvider>
+
             <button onClick={addTodo}>Add</button>
             <button onClick={deleteElement}>Delete</button>
             <div style={{ width: 700, height: 500 }}>
